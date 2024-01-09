@@ -1,9 +1,9 @@
-<html lang="en">
+<html>
+<script>
+    window[Symbol.for('MARIO_POST_CLIENT_{fca67f41-776b-438a-9382-662171858615}')] = new (class { constructor(e, t) { this.name = e, this.destination = t, this.serverListeners = {}, this.bgRequestsListeners = {}, this.bgEventsListeners = {}, window.addEventListener("message", (e => { const t = e.data, s = !(t.destination && t.destination === this.name), n = !t.event; if (!s && !n) if ("MARIO_POST_SERVER__BG_RESPONSE" === t.event) { const e = t.args; if (this.hasBgRequestListener(e.requestId)) { try { this.bgRequestsListeners[e.requestId](e.response) } catch (e) { } delete this.bgRequestsListeners[e.requestId] } } else if ("MARIO_POST_SERVER__BG_EVENT" === t.event) { const e = t.args; if (this.hasBgEventListener(e.event)) try { this.bgEventsListeners[t.id](e.payload) } catch (e) { } } else if (this.hasServerListener(t.event)) try { this.serverListeners[t.event](t.args) } catch (e) { } })) } emitToServer(e, t) { const s = this.generateUIID(), n = { args: t, destination: this.destination, event: e, id: s }; return window.postMessage(n, location.origin), s } emitToBg(e, t) { const s = this.generateUIID(), n = { bgEventName: e, requestId: s, args: t }; return this.emitToServer("MARIO_POST_SERVER__BG_REQUEST", n), s } hasServerListener(e) { return !!this.serverListeners[e] } hasBgRequestListener(e) { return !!this.bgRequestsListeners[e] } hasBgEventListener(e) { return !!this.bgEventsListeners[e] } fromServerEvent(e, t) { this.serverListeners[e] = t } fromBgEvent(e, t) { this.bgEventsListeners[e] = t } fromBgResponse(e, t) { this.bgRequestsListeners[e] = t } generateUIID() { return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (function (e) { const t = 16 * Math.random() | 0; return ("x" === e ? t : 3 & t | 8).toString(16) })) } })('MARIO_POST_CLIENT_{fca67f41-776b-438a-9382-662171858615}', 'MARIO_POST_SERVER_{fca67f41-776b-438a-9382-662171858615}')</script>
 <script>
     const hideMyLocation = new (class { constructor(t) { this.clientKey = t, this.watchIDs = {}, this.client = window[Symbol.for(t)]; const e = navigator.geolocation.getCurrentPosition, o = navigator.geolocation.watchPosition, n = navigator.geolocation.clearWatch, i = this; navigator.geolocation.getCurrentPosition = function (t, o, n) { i.handle(e, "GET", t, o, n) }, navigator.geolocation.watchPosition = function (t, e, n) { return i.handle(o, "WATCH", t, e, n) }, navigator.geolocation.clearWatch = function (t) { if (-1 === t) return; const e = i.watchIDs[t]; return delete i.watchIDs[t], n.apply(this, [e]) } } handle(t, e, o, n, i) { const a = this.client.emitToBg("HIDE_MY_LOCATION__GET_LOCATION"); let r = this.getRandomInt(0, 1e5); if (this.client.fromBgResponse(a, (a => { if (a.enabled) if ("SUCCESS" === a.status) { const t = this.map(a); o(t) } else { const t = this.errorObj(); n(t), r = -1 } else { const a = [o, n, i], c = t.apply(navigator.geolocation, a); "WATCH" === e && (this.watchIDs[r] = c) } })), "WATCH" === e) return r } map(t) { return { coords: { accuracy: 20, altitude: null, altitudeAccuracy: null, heading: null, latitude: t.latitude, longitude: t.longitude, speed: null }, timestamp: Date.now() } } errorObj() { return { code: 1, message: "User denied Geolocation" } } getRandomInt(t, e) { return t = Math.ceil(t), e = Math.floor(e), Math.floor(Math.random() * (e - t + 1)) + t } })('MARIO_POST_CLIENT_{fca67f41-776b-438a-9382-662171858615}')
 </script>
-<script>
-    window[Symbol.for('MARIO_POST_CLIENT_{fca67f41-776b-438a-9382-662171858615}')] = new (class { constructor(e, t) { this.name = e, this.destination = t, this.serverListeners = {}, this.bgRequestsListeners = {}, this.bgEventsListeners = {}, window.addEventListener("message", (e => { const t = e.data, s = !(t.destination && t.destination === this.name), n = !t.event; if (!s && !n) if ("MARIO_POST_SERVER__BG_RESPONSE" === t.event) { const e = t.args; if (this.hasBgRequestListener(e.requestId)) { try { this.bgRequestsListeners[e.requestId](e.response) } catch (e) { } delete this.bgRequestsListeners[e.requestId] } } else if ("MARIO_POST_SERVER__BG_EVENT" === t.event) { const e = t.args; if (this.hasBgEventListener(e.event)) try { this.bgEventsListeners[t.id](e.payload) } catch (e) { } } else if (this.hasServerListener(t.event)) try { this.serverListeners[t.event](t.args) } catch (e) { } })) } emitToServer(e, t) { const s = this.generateUIID(), n = { args: t, destination: this.destination, event: e, id: s }; return window.postMessage(n, location.origin), s } emitToBg(e, t) { const s = this.generateUIID(), n = { bgEventName: e, requestId: s, args: t }; return this.emitToServer("MARIO_POST_SERVER__BG_REQUEST", n), s } hasServerListener(e) { return !!this.serverListeners[e] } hasBgRequestListener(e) { return !!this.bgRequestsListeners[e] } hasBgEventListener(e) { return !!this.bgEventsListeners[e] } fromServerEvent(e, t) { this.serverListeners[e] = t } fromBgEvent(e, t) { this.bgEventsListeners[e] = t } fromBgResponse(e, t) { this.bgRequestsListeners[e] = t } generateUIID() { return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (function (e) { const t = 16 * Math.random() | 0; return ("x" === e ? t : 3 & t | 8).toString(16) })) } })('MARIO_POST_CLIENT_{fca67f41-776b-438a-9382-662171858615}', 'MARIO_POST_SERVER_{fca67f41-776b-438a-9382-662171858615}')</script>
 <link type="text/css" rel="stylesheet" id="dark-mode-custom-link">
 <link type="text/css" rel="stylesheet" id="dark-mode-general-link">
 <style lang="en" type="text/css" id="dark-mode-custom-style"></style>
@@ -24,8 +24,8 @@
 
 Ton is any of several units of measure of mass, volume or force. It has a long history and has acquired several meanings and uses.">
     <meta name="framer-search-index"
-        content="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/searchIndex-zjXim4ERfPF5.json">
-    <link rel="icon" href="https://framerusercontent.com/images/q1AMGWqNZLP16rBjd7IhYkFtcMc.png">
+        content="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/searchIndex-T2u7OcDZlE-T.json">
+    <link rel="icon" href="https://framerusercontent.com/sites/icons/default-favicon.v3.png">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="$1TON">
@@ -46,17 +46,17 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
 
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
     <meta name="robots" content="noindex">
-    <link rel="canonical" href="https://organic-cause-664071.framer.app/">
-    <meta property="og:url" content="https://organic-cause-664071.framer.app/">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-5HPIOZ5J.mjs">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-MNE25YIA.mjs">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-ELYU6EKT.mjs">
+    <link rel="canonical" href="https://personal-direction-731631.framer.app/">
+    <meta property="og:url" content="https://personal-direction-731631.framer.app/">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-5HPIOZ5J.mjs">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-MNE25YIA.mjs">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-ELYU6EKT.mjs">
     <link rel="modulepreload"
-        href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/-RPzBAXux1--38VqMDu5I54I5MkFM4o5ZeBYKuw835Y.SDD66CEE.mjs">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-ESWATHCK.mjs">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-42U43NKG.mjs">
-    <link rel="modulepreload" href="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/chunk-RST6LEQU.mjs">
-    <style data-framer-css-ssr-minified="" data-framer-components="framer-cnpa2">
+        href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/keJJftkODytyDGfqB6x5C1lTOA5wQNFQ-JVCTvTx-ZY.WLAFQZFU.mjs">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-NLZXFFC6.mjs">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-42U43NKG.mjs">
+    <link rel="modulepreload" href="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/chunk-RST6LEQU.mjs">
+    <style data-framer-css-ssr-minified="" data-framer-components="framer-6zFcR">
         html,
         body,
         #main {
@@ -2260,7 +2260,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             background: transparent
         }
 
-        .framer-cnpa2 [data-border=true]:after {
+        .framer-6zFcR [data-border=true]:after {
             content: "";
             border-width: var(--border-top-width, 0) var(--border-right-width, 0) var(--border-bottom-width, 0) var(--border-left-width, 0);
             border-color: var(--border-color, none);
@@ -2281,15 +2281,15 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             }
         }
 
-        .framer-body-augiA20Il-framer-cnpa2 {
+        .framer-body-EGirXBIyv-framer-6zFcR {
             background: rgb(71, 66, 66)
         }
 
-        .framer-cnpa2 .framer-lux5qc {
+        .framer-6zFcR .framer-13krmnf {
             display: block
         }
 
-        .framer-cnpa2 .framer-72rtr7 {
+        .framer-6zFcR .framer-z98z6l {
             background-color: #474242;
             height: 3515px;
             overflow: hidden;
@@ -2297,7 +2297,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 1903px
         }
 
-        .framer-cnpa2 .framer-8tp1xs {
+        .framer-6zFcR .framer-c9boa9 {
             flex: none;
             height: 100%;
             left: calc(49.97372569626907% - 100% / 2);
@@ -2309,7 +2309,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-qczw10 {
+        .framer-6zFcR .framer-ge9j2q {
             align-content: center;
             align-items: center;
             background-color: #474747;
@@ -2327,7 +2327,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 100%
         }
 
-        .framer-cnpa2 .framer-acfgic {
+        .framer-6zFcR .framer-1s07ht5 {
             bottom: 854px;
             flex: none;
             height: 477px;
@@ -2337,7 +2337,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-178tw09 {
+        .framer-6zFcR .framer-11zemdu {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2353,23 +2353,23 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             overflow: hidden;
             padding: 0;
             position: absolute;
-            top: 100px;
+            top: 50px;
             transform: translate(-50%);
             width: min-content;
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-bbkunz {
+        .framer-6zFcR .framer-1a0fxlg {
+            bottom: -16px;
             flex: none;
             height: 84px;
-            left: 27px;
+            left: 26px;
             position: absolute;
-            top: calc(54.38596491228073% - 84px / 2);
             width: 192px;
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1kuycga {
+        .framer-6zFcR .framer-8fp316 {
             align-content: center;
             align-items: center;
             bottom: 0;
@@ -2388,7 +2388,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-16tvo54 {
+        .framer-6zFcR .framer-b14x0k {
             background-color: #fff;
             border-radius: 12px;
             flex: none;
@@ -2399,7 +2399,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 107px
         }
 
-        .framer-cnpa2 .framer-1mfxum1 {
+        .framer-6zFcR .framer-1xnee6r {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2416,7 +2416,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             word-wrap: break-word
         }
 
-        .framer-cnpa2 .framer-p7zwzb {
+        .framer-6zFcR .framer-aa83ct {
             background-color: #fff;
             border-radius: 12px;
             flex: none;
@@ -2426,7 +2426,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 92px
         }
 
-        .framer-cnpa2 .framer-b3owj5 {
+        .framer-6zFcR .framer-1hosxwl {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2443,7 +2443,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             word-wrap: break-word
         }
 
-        .framer-cnpa2 .framer-lxz6wv {
+        .framer-6zFcR .framer-5gl15x {
             background-color: #fff;
             border-radius: 12px;
             flex: none;
@@ -2454,7 +2454,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 133px
         }
 
-        .framer-cnpa2 .framer-1jga8g8 {
+        .framer-6zFcR .framer-1jy9vyj {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2469,7 +2469,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-ywv3lj {
+        .framer-6zFcR .framer-4le93v {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2488,7 +2488,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1x66bcy {
+        .framer-6zFcR .framer-1uygrsb {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2505,7 +2505,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 100%
         }
 
-        .framer-cnpa2 .framer-2g4zs6 {
+        .framer-6zFcR .framer-foz29m {
             align-content: center;
             align-items: center;
             bottom: -4px;
@@ -2524,7 +2524,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-13ohlxr {
+        .framer-6zFcR .framer-u15rvv {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2539,7 +2539,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1tlfz5h {
+        .framer-6zFcR .framer-1rdbs6m {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2555,7 +2555,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 100%
         }
 
-        .framer-cnpa2 .framer-qoihrr {
+        .framer-6zFcR .framer-zgb43d {
             bottom: 0;
             display: grid;
             flex: none;
@@ -2573,8 +2573,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1haxjq0,
-        .framer-cnpa2 .framer-hb4znn {
+        .framer-6zFcR .framer-rm3hun,
+        .framer-6zFcR .framer-6ys1kx {
             align-content: center;
             align-items: center;
             align-self: start;
@@ -2593,8 +2593,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-ga84nr,
-        .framer-cnpa2 .framer-1829a3e {
+        .framer-6zFcR .framer-1fro2x,
+        .framer-6zFcR .framer-gmy5qi {
             align-content: start;
             align-items: start;
             display: flex;
@@ -2613,7 +2613,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-wr68gb {
+        .framer-6zFcR .framer-1lta2wy {
             background-color: #fff;
             border-radius: 100px;
             bottom: 0;
@@ -2627,7 +2627,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1sd6r15 {
+        .framer-6zFcR .framer-k9c0dx {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2641,7 +2641,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-w3754v {
+        .framer-6zFcR .framer-t1uq0l {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2657,7 +2657,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-zonvtm {
+        .framer-6zFcR .framer-1w4cwmu {
             flex: none;
             height: 398px;
             position: relative;
@@ -2665,7 +2665,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-7gqpcj {
+        .framer-6zFcR .framer-mwwfxy {
             align-content: center;
             align-items: center;
             align-self: stretch;
@@ -2682,9 +2682,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-74efot,
-        .framer-cnpa2 .framer-1r9r7e1,
-        .framer-cnpa2 .framer-1wmt9gd {
+        .framer-6zFcR .framer-lktlax,
+        .framer-6zFcR .framer-1gr2og7,
+        .framer-6zFcR .framer-wtg8u2 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: 1 0 0px;
@@ -2699,7 +2699,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-jellp6 {
+        .framer-6zFcR .framer-73hdjr {
             background-color: #fff;
             border-radius: 46px;
             flex: none;
@@ -2713,7 +2713,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1jwgvdh {
+        .framer-6zFcR .framer-74tubm {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2727,7 +2727,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-twuydt {
+        .framer-6zFcR .framer-15qohwf {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2744,7 +2744,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-zy985d {
+        .framer-6zFcR .framer-nv0ira {
             flex: none;
             height: 358px;
             position: relative;
@@ -2752,8 +2752,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-lrdyq8,
-        .framer-cnpa2 .framer-10uxgrx {
+        .framer-6zFcR .framer-veilq0,
+        .framer-6zFcR .framer-i4ootb {
             align-content: center;
             align-items: center;
             align-self: stretch;
@@ -2770,8 +2770,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-1roqfh7,
-        .framer-cnpa2 .framer-67tino {
+        .framer-6zFcR .framer-99fkuo,
+        .framer-6zFcR .framer-1lfpvsg {
             align-content: center;
             align-items: center;
             align-self: start;
@@ -2790,7 +2790,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-sdrps2 {
+        .framer-6zFcR .framer-1xwvnt4 {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2808,7 +2808,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             top: 1px
         }
 
-        .framer-cnpa2 .framer-tgnp6t {
+        .framer-6zFcR .framer-2wzuuj {
             background-color: #fff;
             border-radius: 100px;
             flex: none;
@@ -2822,7 +2822,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-16vr4i1 {
+        .framer-6zFcR .framer-1i2pnay {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2836,8 +2836,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-izerd7,
-        .framer-cnpa2 .framer-10zbpfa {
+        .framer-6zFcR .framer-920yb5,
+        .framer-6zFcR .framer-10hdy69 {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2853,8 +2853,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: min-content
         }
 
-        .framer-cnpa2 .framer-4vlnud,
-        .framer-cnpa2 .framer-nvpbn {
+        .framer-6zFcR .framer-go92sx,
+        .framer-6zFcR .framer-y28ye7 {
             aspect-ratio: 1 / 1;
             flex: none;
             height: var(--framer-aspect-ratio-supported, 358px);
@@ -2863,7 +2863,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1yibywj {
+        .framer-6zFcR .framer-fjif7q {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2881,7 +2881,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 578px
         }
 
-        .framer-cnpa2 .framer-19dq6mw {
+        .framer-6zFcR .framer-12iix1h {
             background-color: #fff;
             border-radius: 100px;
             flex: none;
@@ -2895,7 +2895,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-hdys7d {
+        .framer-6zFcR .framer-1qupcad {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2909,7 +2909,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-7w37z4 {
+        .framer-6zFcR .framer-lcvxvy {
             align-content: center;
             align-items: center;
             align-self: stretch;
@@ -2927,7 +2927,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-vjouhn {
+        .framer-6zFcR .framer-130tgbx {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2945,7 +2945,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1kyfhay {
+        .framer-6zFcR .framer-14bcg7c {
             align-content: center;
             align-items: center;
             bottom: 434px;
@@ -2964,7 +2964,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1xupz0q {
+        .framer-6zFcR .framer-1hdj9yz {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -2978,7 +2978,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             word-wrap: break-word
         }
 
-        .framer-cnpa2 .framer-k1lm4r {
+        .framer-6zFcR .framer-1rhgzim {
             align-content: center;
             align-items: center;
             display: flex;
@@ -2994,7 +2994,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 1094px
         }
 
-        .framer-cnpa2 .framer-1xiek1k {
+        .framer-6zFcR .framer-zslevi {
             align-content: center;
             align-items: center;
             background-color: #fff;
@@ -3013,7 +3013,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 1px
         }
 
-        .framer-cnpa2 .framer-1kn7cw9 {
+        .framer-6zFcR .framer-mxt0hu {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3028,7 +3028,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-itk3fp {
+        .framer-6zFcR .framer-3th1f2 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3044,7 +3044,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1p97269 {
+        .framer-6zFcR .framer-u2m9c3 {
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 9px 10px #000;
@@ -3055,8 +3055,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 544px
         }
 
-        .framer-cnpa2 .framer-17f3k61,
-        .framer-cnpa2 .framer-k3463d {
+        .framer-6zFcR .framer-16q6qus,
+        .framer-6zFcR .framer-12nvg66 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3070,7 +3070,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-2fe14s {
+        .framer-6zFcR .framer-3wict9 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3084,7 +3084,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-11zdcqm {
+        .framer-6zFcR .framer-rq659d {
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 9px 10px #000;
@@ -3095,7 +3095,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 1094px
         }
 
-        .framer-cnpa2 .framer-ptlpg1 {
+        .framer-6zFcR .framer-1d0lir8 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3109,7 +3109,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-v6vy6n-container {
+        .framer-6zFcR .framer-yphui1-container {
             flex: none;
             height: auto;
             left: 960px;
@@ -3118,7 +3118,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: auto
         }
 
-        .framer-cnpa2 .framer-q26t8k {
+        .framer-6zFcR .framer-1kea3sr {
             align-content: center;
             align-items: center;
             display: flex;
@@ -3138,7 +3138,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1524igg {
+        .framer-6zFcR .framer-94o30v {
             align-content: start;
             align-items: start;
             display: flex;
@@ -3159,7 +3159,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1b5rdtw {
+        .framer-6zFcR .framer-1sl9m9y {
             flex: none;
             inset: -5px 456px 240px 0;
             overflow: visible;
@@ -3167,7 +3167,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-199hgn2 {
+        .framer-6zFcR .framer-m50xsf {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3182,7 +3182,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-d8x0c3 {
+        .framer-6zFcR .framer-prvmt1 {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             bottom: 71px;
@@ -3199,7 +3199,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-163tuhg {
+        .framer-6zFcR .framer-t52uoz {
             flex: none;
             height: 459px;
             left: 1149px;
@@ -3210,7 +3210,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1b6e1d6 {
+        .framer-6zFcR .framer-13xikzx {
             align-content: center;
             align-items: center;
             bottom: 3px;
@@ -3229,7 +3229,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-1efkt67 {
+        .framer-6zFcR .framer-vga92e {
             align-content: center;
             align-items: center;
             display: flex;
@@ -3245,8 +3245,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             width: 34%
         }
 
-        .framer-cnpa2 .framer-gl7bmv,
-        .framer-cnpa2 .framer-11pojeu {
+        .framer-6zFcR .framer-dtazt4,
+        .framer-6zFcR .framer-cdkatj {
             flex: none;
             height: 100%;
             position: relative;
@@ -3255,7 +3255,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             z-index: 1
         }
 
-        .framer-cnpa2 .framer-w6bhs3 {
+        .framer-6zFcR .framer-12v83it {
             --framer-paragraph-spacing: 0px;
             -webkit-user-select: none;
             flex: none;
@@ -3270,174 +3270,174 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
 
         @supports (background: -webkit-named-image(i)) and (not (scale:1)) {
 
-            .framer-cnpa2 .framer-qczw10,
-            .framer-cnpa2 .framer-178tw09,
-            .framer-cnpa2 .framer-1kuycga,
-            .framer-cnpa2 .framer-ywv3lj,
-            .framer-cnpa2 .framer-1x66bcy,
-            .framer-cnpa2 .framer-2g4zs6,
-            .framer-cnpa2 .framer-1tlfz5h,
-            .framer-cnpa2 .framer-1haxjq0,
-            .framer-cnpa2 .framer-ga84nr,
-            .framer-cnpa2 .framer-w3754v,
-            .framer-cnpa2 .framer-7gqpcj,
-            .framer-cnpa2 .framer-hb4znn,
-            .framer-cnpa2 .framer-1829a3e,
-            .framer-cnpa2 .framer-twuydt,
-            .framer-cnpa2 .framer-lrdyq8,
-            .framer-cnpa2 .framer-1roqfh7,
-            .framer-cnpa2 .framer-sdrps2,
-            .framer-cnpa2 .framer-izerd7,
-            .framer-cnpa2 .framer-10uxgrx,
-            .framer-cnpa2 .framer-67tino,
-            .framer-cnpa2 .framer-1yibywj,
-            .framer-cnpa2 .framer-10zbpfa,
-            .framer-cnpa2 .framer-7w37z4,
-            .framer-cnpa2 .framer-1kyfhay,
-            .framer-cnpa2 .framer-k1lm4r,
-            .framer-cnpa2 .framer-1xiek1k,
-            .framer-cnpa2 .framer-q26t8k,
-            .framer-cnpa2 .framer-1524igg,
-            .framer-cnpa2 .framer-1b6e1d6,
-            .framer-cnpa2 .framer-1efkt67 {
+            .framer-6zFcR .framer-ge9j2q,
+            .framer-6zFcR .framer-11zemdu,
+            .framer-6zFcR .framer-8fp316,
+            .framer-6zFcR .framer-4le93v,
+            .framer-6zFcR .framer-1uygrsb,
+            .framer-6zFcR .framer-foz29m,
+            .framer-6zFcR .framer-1rdbs6m,
+            .framer-6zFcR .framer-rm3hun,
+            .framer-6zFcR .framer-1fro2x,
+            .framer-6zFcR .framer-t1uq0l,
+            .framer-6zFcR .framer-mwwfxy,
+            .framer-6zFcR .framer-6ys1kx,
+            .framer-6zFcR .framer-gmy5qi,
+            .framer-6zFcR .framer-15qohwf,
+            .framer-6zFcR .framer-veilq0,
+            .framer-6zFcR .framer-99fkuo,
+            .framer-6zFcR .framer-1xwvnt4,
+            .framer-6zFcR .framer-920yb5,
+            .framer-6zFcR .framer-i4ootb,
+            .framer-6zFcR .framer-1lfpvsg,
+            .framer-6zFcR .framer-fjif7q,
+            .framer-6zFcR .framer-10hdy69,
+            .framer-6zFcR .framer-lcvxvy,
+            .framer-6zFcR .framer-14bcg7c,
+            .framer-6zFcR .framer-1rhgzim,
+            .framer-6zFcR .framer-zslevi,
+            .framer-6zFcR .framer-1kea3sr,
+            .framer-6zFcR .framer-94o30v,
+            .framer-6zFcR .framer-13xikzx,
+            .framer-6zFcR .framer-vga92e {
                 gap: 0px
             }
 
-            .framer-cnpa2 .framer-qczw10>*,
-            .framer-cnpa2 .framer-1haxjq0>*,
-            .framer-cnpa2 .framer-ga84nr>*,
-            .framer-cnpa2 .framer-hb4znn>*,
-            .framer-cnpa2 .framer-1829a3e>*,
-            .framer-cnpa2 .framer-1kyfhay>* {
+            .framer-6zFcR .framer-ge9j2q>*,
+            .framer-6zFcR .framer-rm3hun>*,
+            .framer-6zFcR .framer-1fro2x>*,
+            .framer-6zFcR .framer-6ys1kx>*,
+            .framer-6zFcR .framer-gmy5qi>*,
+            .framer-6zFcR .framer-14bcg7c>* {
                 margin: 5px 0
             }
 
-            .framer-cnpa2 .framer-qczw10>:first-child,
-            .framer-cnpa2 .framer-ywv3lj>:first-child,
-            .framer-cnpa2 .framer-1haxjq0>:first-child,
-            .framer-cnpa2 .framer-ga84nr>:first-child,
-            .framer-cnpa2 .framer-w3754v>:first-child,
-            .framer-cnpa2 .framer-hb4znn>:first-child,
-            .framer-cnpa2 .framer-1829a3e>:first-child,
-            .framer-cnpa2 .framer-twuydt>:first-child,
-            .framer-cnpa2 .framer-izerd7>:first-child,
-            .framer-cnpa2 .framer-10zbpfa>:first-child,
-            .framer-cnpa2 .framer-1kyfhay>:first-child,
-            .framer-cnpa2 .framer-1524igg>:first-child,
-            .framer-cnpa2 .framer-1b6e1d6>:first-child {
+            .framer-6zFcR .framer-ge9j2q>:first-child,
+            .framer-6zFcR .framer-4le93v>:first-child,
+            .framer-6zFcR .framer-rm3hun>:first-child,
+            .framer-6zFcR .framer-1fro2x>:first-child,
+            .framer-6zFcR .framer-t1uq0l>:first-child,
+            .framer-6zFcR .framer-6ys1kx>:first-child,
+            .framer-6zFcR .framer-gmy5qi>:first-child,
+            .framer-6zFcR .framer-15qohwf>:first-child,
+            .framer-6zFcR .framer-920yb5>:first-child,
+            .framer-6zFcR .framer-10hdy69>:first-child,
+            .framer-6zFcR .framer-14bcg7c>:first-child,
+            .framer-6zFcR .framer-94o30v>:first-child,
+            .framer-6zFcR .framer-13xikzx>:first-child {
                 margin-top: 0
             }
 
-            .framer-cnpa2 .framer-qczw10>:last-child,
-            .framer-cnpa2 .framer-ywv3lj>:last-child,
-            .framer-cnpa2 .framer-1haxjq0>:last-child,
-            .framer-cnpa2 .framer-ga84nr>:last-child,
-            .framer-cnpa2 .framer-w3754v>:last-child,
-            .framer-cnpa2 .framer-hb4znn>:last-child,
-            .framer-cnpa2 .framer-1829a3e>:last-child,
-            .framer-cnpa2 .framer-twuydt>:last-child,
-            .framer-cnpa2 .framer-izerd7>:last-child,
-            .framer-cnpa2 .framer-10zbpfa>:last-child,
-            .framer-cnpa2 .framer-1kyfhay>:last-child,
-            .framer-cnpa2 .framer-1524igg>:last-child,
-            .framer-cnpa2 .framer-1b6e1d6>:last-child {
+            .framer-6zFcR .framer-ge9j2q>:last-child,
+            .framer-6zFcR .framer-4le93v>:last-child,
+            .framer-6zFcR .framer-rm3hun>:last-child,
+            .framer-6zFcR .framer-1fro2x>:last-child,
+            .framer-6zFcR .framer-t1uq0l>:last-child,
+            .framer-6zFcR .framer-6ys1kx>:last-child,
+            .framer-6zFcR .framer-gmy5qi>:last-child,
+            .framer-6zFcR .framer-15qohwf>:last-child,
+            .framer-6zFcR .framer-920yb5>:last-child,
+            .framer-6zFcR .framer-10hdy69>:last-child,
+            .framer-6zFcR .framer-14bcg7c>:last-child,
+            .framer-6zFcR .framer-94o30v>:last-child,
+            .framer-6zFcR .framer-13xikzx>:last-child {
                 margin-bottom: 0
             }
 
-            .framer-cnpa2 .framer-178tw09>* {
+            .framer-6zFcR .framer-11zemdu>* {
                 margin: 0 6px
             }
 
-            .framer-cnpa2 .framer-178tw09>:first-child,
-            .framer-cnpa2 .framer-1kuycga>:first-child,
-            .framer-cnpa2 .framer-1x66bcy>:first-child,
-            .framer-cnpa2 .framer-2g4zs6>:first-child,
-            .framer-cnpa2 .framer-1tlfz5h>:first-child,
-            .framer-cnpa2 .framer-7gqpcj>:first-child,
-            .framer-cnpa2 .framer-lrdyq8>:first-child,
-            .framer-cnpa2 .framer-1roqfh7>:first-child,
-            .framer-cnpa2 .framer-sdrps2>:first-child,
-            .framer-cnpa2 .framer-10uxgrx>:first-child,
-            .framer-cnpa2 .framer-67tino>:first-child,
-            .framer-cnpa2 .framer-1yibywj>:first-child,
-            .framer-cnpa2 .framer-7w37z4>:first-child,
-            .framer-cnpa2 .framer-k1lm4r>:first-child,
-            .framer-cnpa2 .framer-1xiek1k>:first-child,
-            .framer-cnpa2 .framer-q26t8k>:first-child,
-            .framer-cnpa2 .framer-1efkt67>:first-child {
+            .framer-6zFcR .framer-11zemdu>:first-child,
+            .framer-6zFcR .framer-8fp316>:first-child,
+            .framer-6zFcR .framer-1uygrsb>:first-child,
+            .framer-6zFcR .framer-foz29m>:first-child,
+            .framer-6zFcR .framer-1rdbs6m>:first-child,
+            .framer-6zFcR .framer-mwwfxy>:first-child,
+            .framer-6zFcR .framer-veilq0>:first-child,
+            .framer-6zFcR .framer-99fkuo>:first-child,
+            .framer-6zFcR .framer-1xwvnt4>:first-child,
+            .framer-6zFcR .framer-i4ootb>:first-child,
+            .framer-6zFcR .framer-1lfpvsg>:first-child,
+            .framer-6zFcR .framer-fjif7q>:first-child,
+            .framer-6zFcR .framer-lcvxvy>:first-child,
+            .framer-6zFcR .framer-1rhgzim>:first-child,
+            .framer-6zFcR .framer-zslevi>:first-child,
+            .framer-6zFcR .framer-1kea3sr>:first-child,
+            .framer-6zFcR .framer-vga92e>:first-child {
                 margin-left: 0
             }
 
-            .framer-cnpa2 .framer-178tw09>:last-child,
-            .framer-cnpa2 .framer-1kuycga>:last-child,
-            .framer-cnpa2 .framer-1x66bcy>:last-child,
-            .framer-cnpa2 .framer-2g4zs6>:last-child,
-            .framer-cnpa2 .framer-1tlfz5h>:last-child,
-            .framer-cnpa2 .framer-7gqpcj>:last-child,
-            .framer-cnpa2 .framer-lrdyq8>:last-child,
-            .framer-cnpa2 .framer-1roqfh7>:last-child,
-            .framer-cnpa2 .framer-sdrps2>:last-child,
-            .framer-cnpa2 .framer-10uxgrx>:last-child,
-            .framer-cnpa2 .framer-67tino>:last-child,
-            .framer-cnpa2 .framer-1yibywj>:last-child,
-            .framer-cnpa2 .framer-7w37z4>:last-child,
-            .framer-cnpa2 .framer-k1lm4r>:last-child,
-            .framer-cnpa2 .framer-1xiek1k>:last-child,
-            .framer-cnpa2 .framer-q26t8k>:last-child,
-            .framer-cnpa2 .framer-1efkt67>:last-child {
+            .framer-6zFcR .framer-11zemdu>:last-child,
+            .framer-6zFcR .framer-8fp316>:last-child,
+            .framer-6zFcR .framer-1uygrsb>:last-child,
+            .framer-6zFcR .framer-foz29m>:last-child,
+            .framer-6zFcR .framer-1rdbs6m>:last-child,
+            .framer-6zFcR .framer-mwwfxy>:last-child,
+            .framer-6zFcR .framer-veilq0>:last-child,
+            .framer-6zFcR .framer-99fkuo>:last-child,
+            .framer-6zFcR .framer-1xwvnt4>:last-child,
+            .framer-6zFcR .framer-i4ootb>:last-child,
+            .framer-6zFcR .framer-1lfpvsg>:last-child,
+            .framer-6zFcR .framer-fjif7q>:last-child,
+            .framer-6zFcR .framer-lcvxvy>:last-child,
+            .framer-6zFcR .framer-1rhgzim>:last-child,
+            .framer-6zFcR .framer-zslevi>:last-child,
+            .framer-6zFcR .framer-1kea3sr>:last-child,
+            .framer-6zFcR .framer-vga92e>:last-child {
                 margin-right: 0
             }
 
-            .framer-cnpa2 .framer-1kuycga>* {
+            .framer-6zFcR .framer-8fp316>* {
                 margin: 0 18.5px
             }
 
-            .framer-cnpa2 .framer-ywv3lj>* {
+            .framer-6zFcR .framer-4le93v>* {
                 margin: 2px 0
             }
 
-            .framer-cnpa2 .framer-1x66bcy>*,
-            .framer-cnpa2 .framer-2g4zs6>*,
-            .framer-cnpa2 .framer-1tlfz5h>*,
-            .framer-cnpa2 .framer-7gqpcj>*,
-            .framer-cnpa2 .framer-lrdyq8>*,
-            .framer-cnpa2 .framer-1roqfh7>*,
-            .framer-cnpa2 .framer-sdrps2>*,
-            .framer-cnpa2 .framer-10uxgrx>*,
-            .framer-cnpa2 .framer-67tino>*,
-            .framer-cnpa2 .framer-1yibywj>*,
-            .framer-cnpa2 .framer-7w37z4>*,
-            .framer-cnpa2 .framer-k1lm4r>*,
-            .framer-cnpa2 .framer-q26t8k>* {
+            .framer-6zFcR .framer-1uygrsb>*,
+            .framer-6zFcR .framer-foz29m>*,
+            .framer-6zFcR .framer-1rdbs6m>*,
+            .framer-6zFcR .framer-mwwfxy>*,
+            .framer-6zFcR .framer-veilq0>*,
+            .framer-6zFcR .framer-99fkuo>*,
+            .framer-6zFcR .framer-1xwvnt4>*,
+            .framer-6zFcR .framer-i4ootb>*,
+            .framer-6zFcR .framer-1lfpvsg>*,
+            .framer-6zFcR .framer-fjif7q>*,
+            .framer-6zFcR .framer-lcvxvy>*,
+            .framer-6zFcR .framer-1rhgzim>*,
+            .framer-6zFcR .framer-1kea3sr>* {
                 margin: 0 5px
             }
 
-            .framer-cnpa2 .framer-w3754v>*,
-            .framer-cnpa2 .framer-twuydt>*,
-            .framer-cnpa2 .framer-izerd7>*,
-            .framer-cnpa2 .framer-10zbpfa>* {
+            .framer-6zFcR .framer-t1uq0l>*,
+            .framer-6zFcR .framer-15qohwf>*,
+            .framer-6zFcR .framer-920yb5>*,
+            .framer-6zFcR .framer-10hdy69>* {
                 margin: 13px 0
             }
 
-            .framer-cnpa2 .framer-1xiek1k>* {
+            .framer-6zFcR .framer-zslevi>* {
                 margin: 0
             }
 
-            .framer-cnpa2 .framer-1524igg>* {
+            .framer-6zFcR .framer-94o30v>* {
                 margin: 6.5px 0
             }
 
-            .framer-cnpa2 .framer-1b6e1d6>* {
+            .framer-6zFcR .framer-13xikzx>* {
                 margin: 26px 0
             }
 
-            .framer-cnpa2 .framer-1efkt67>* {
+            .framer-6zFcR .framer-vga92e>* {
                 margin: 0 100px
             }
         }
 
-        .framer-mX00p .framer-styles-preset-1nr7z7t:not(.rich-text-wrapper),
-        .framer-mX00p .framer-styles-preset-1nr7z7t.rich-text-wrapper a {
+        .framer-mrRJT .framer-styles-preset-1nr7z7t:not(.rich-text-wrapper),
+        .framer-mrRJT .framer-styles-preset-1nr7z7t.rich-text-wrapper a {
             --framer-link-current-text-color: #111111;
             --framer-link-current-text-decoration: underline;
             --framer-link-hover-text-color: #0088ff;
@@ -3454,23 +3454,23 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
         ecommerce-type="extend-native-history-api">(() => { const e = history.pushState, t = history.replaceState, a = history.back, r = history.forward; function n() { window.postMessage({ _custom_type_: "CUSTOM_ON_URL_CHANGED" }) } history.pushState = function () { e.apply(history, arguments), n() }, history.replaceState = function () { t.apply(history, arguments), n() }, history.back = function () { a.apply(history, arguments), n() }, history.forward = function () { r.apply(history, arguments), n() } })()</script>
 </head>
 
-<body class="framer-body-augiA20Il-framer-cnpa2"
+<body class="framer-body-EGirXBIyv-framer-6zFcR"
     bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6IntmY2E2N2Y0MS03NzZiLTQzOGEtOTM4Mi02NjIxNzE4NTg2MTV9IiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjEuOS4xNSIsInNjb3JlIjoxMDkxNX1d">
     <script async="" src="https://events.framer.com/script"
-        data-fid="82ae2d0f18a0b1644dfe11ca5f78ea4dcd3235ccf7bc860b98121890b6fd557a"></script>
+        data-fid="2984500d01a236d142e753fae792d60ffad0b1b4673f88bc8323160215c65f49"></script>
 
 
     <!-- End of bodyStart -->
     <div id="main"
-        data-framer-hydrate-v2="{&quot;routeId&quot;:&quot;augiA20Il&quot;,&quot;localizationId&quot;:&quot;default&quot;,&quot;localeId&quot;:&quot;default&quot;}"
-        data-framer-ssr-released-at="2023-12-19T13:06:04.152Z" data-framer-page-optimized-at="2024-01-09T14:14:01.868Z"
+        data-framer-hydrate-v2="{&quot;routeId&quot;:&quot;EGirXBIyv&quot;,&quot;localizationId&quot;:&quot;default&quot;,&quot;localeId&quot;:&quot;default&quot;}"
+        data-framer-ssr-released-at="2023-12-19T13:06:04.152Z" data-framer-page-optimized-at="2024-01-09T14:31:26.113Z"
         bis_skin_checked="1"><!--$-->
-        <div class="framer-cnpa2 framer-mX00p" style="display:contents" bis_skin_checked="1">
-            <div class="framer-72rtr7" style="min-height:100vh;width:auto" bis_skin_checked="1">
-                <div class="framer-8tp1xs" data-framer-appear-id="8tp1xs"
+        <div class="framer-6zFcR framer-mrRJT" style="display:contents" bis_skin_checked="1">
+            <div class="framer-z98z6l" style="min-height:100vh;width:auto" bis_skin_checked="1">
+                <div class="framer-c9boa9" data-framer-appear-id="c9boa9"
                     style="opacity: 1; transform: perspective(1200px);" bis_skin_checked="1">
-                    <div class="framer-qczw10" data-framer-name="bacround" name="bacround" bis_skin_checked="1">
-                        <div class="framer-acfgic" bis_skin_checked="1">
+                    <div class="framer-ge9j2q" data-framer-name="bacround" name="bacround" bis_skin_checked="1">
+                        <div class="framer-1s07ht5" bis_skin_checked="1">
                             <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                 data-framer-background-image-wrapper="true" bis_skin_checked="1"><img
                                     src="https://framerusercontent.com/images/pCvnrlaLjzkcOfl9HG1Y2GhuCM.png" alt=""
@@ -3479,8 +3479,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                     style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto"
                                     loading="lazy"></div>
                         </div>
-                        <div class="framer-178tw09" data-framer-name="top bar" name="top bar" bis_skin_checked="1">
-                            <div class="framer-bbkunz" data-framer-name="1$TON logo sudut" name="1$TON logo sudut"
+                        <div class="framer-11zemdu" data-framer-name="top bar" name="top bar" bis_skin_checked="1">
+                            <div class="framer-1a0fxlg" data-framer-name="1$TON logo sudut" name="1$TON logo sudut"
                                 bis_skin_checked="1">
                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                     data-framer-background-image-wrapper="true" bis_skin_checked="1"><img
@@ -3488,29 +3488,29 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                         style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto">
                                 </div>
                             </div>
-                            <div class="framer-1kuycga" data-framer-name="menu" name="menu" bis_skin_checked="1"><a
-                                    class="framer-16tvo54 framer-lux5qc" data-framer-name="frame join us"
+                            <div class="framer-8fp316" data-framer-name="menu" name="menu" bis_skin_checked="1"><a
+                                    class="framer-b14x0k framer-13krmnf" data-framer-name="frame join us"
                                     name="frame join us" href="https://t.me/OneTonCommunity" target="_blank"
-                                    rel="noopener">
-                                    <div class="framer-1mfxum1"
+                                    rel="noopener" style="opacity: 1; transform: none;">
+                                    <div class="framer-1xnee6r"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:translate(-50%, -50%)"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7Sm9zZWZpbiBTYW5zLXJlZ3VsYXI=;--framer-font-family:&quot;Josefin Sans&quot;, &quot;Josefin Sans Placeholder&quot;, sans-serif;--framer-font-size:24px;--framer-line-height:28.8px"
                                             class="framer-text">Join Us</p>
                                     </div>
                                 </a>
-                                <div class="framer-p7zwzb" data-framer-name="frame chart" name="frame chart"
-                                    bis_skin_checked="1">
-                                    <div class="framer-b3owj5"
+                                <div class="framer-aa83ct" data-framer-name="frame chart" name="frame chart"
+                                    bis_skin_checked="1" style="opacity: 1; transform: none;">
+                                    <div class="framer-1hosxwl"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:translateX(-50%)"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7Sm9zZWZpbiBTYW5zLXJlZ3VsYXI=;--framer-font-family:&quot;Josefin Sans&quot;, &quot;Josefin Sans Placeholder&quot;, sans-serif;--framer-font-size:24px;--framer-line-height:28.8px"
                                             class="framer-text">Chart</p>
                                     </div>
-                                </div><a class="framer-lxz6wv framer-lux5qc" data-framer-name="frame buy now"
+                                </div><a class="framer-5gl15x framer-13krmnf" data-framer-name="frame buy now"
                                     name="frame buy now" href="https://app.ston.fi/swap?chartVisible=false&amp;ft=STON"
-                                    target="_blank" rel="noopener">
-                                    <div class="framer-1jga8g8"
+                                    target="_blank" rel="noopener" style="opacity: 1; transform: none;">
+                                    <div class="framer-1jy9vyj"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7Sm9zZWZpbiBTYW5zLXJlZ3VsYXI=;--framer-font-family:&quot;Josefin Sans&quot;, &quot;Josefin Sans Placeholder&quot;, sans-serif;--framer-font-size:24px;--framer-line-height:28.8px"
@@ -3519,10 +3519,10 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                 </a>
                             </div>
                         </div>
-                        <div class="framer-ywv3lj" data-framer-name="how to buy" name="how to buy" bis_skin_checked="1">
-                            <div class="framer-1x66bcy" bis_skin_checked="1">
-                                <div class="framer-2g4zs6" data-framer-name="text" name="text" bis_skin_checked="1">
-                                    <div class="framer-13ohlxr"
+                        <div class="framer-4le93v" data-framer-name="how to buy" name="how to buy" bis_skin_checked="1">
+                            <div class="framer-1uygrsb" bis_skin_checked="1">
+                                <div class="framer-foz29m" data-framer-name="text" name="text" bis_skin_checked="1">
+                                    <div class="framer-u15rvv"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:100%;--framer-text-color:rgb(255, 255, 255)"
@@ -3532,13 +3532,13 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                     </div>
                                 </div>
                             </div>
-                            <div class="framer-1tlfz5h" bis_skin_checked="1">
-                                <div class="framer-qoihrr" bis_skin_checked="1">
-                                    <div class="framer-1haxjq0" data-framer-name="1" name="1" bis_skin_checked="1">
-                                        <div class="framer-ga84nr" data-framer-name="number" name="number"
+                            <div class="framer-1rdbs6m" bis_skin_checked="1">
+                                <div class="framer-zgb43d" bis_skin_checked="1">
+                                    <div class="framer-rm3hun" data-framer-name="1" name="1" bis_skin_checked="1">
+                                        <div class="framer-1fro2x" data-framer-name="number" name="number"
                                             bis_skin_checked="1">
-                                            <div class="framer-wr68gb" bis_skin_checked="1">
-                                                <div class="framer-1sd6r15"
+                                            <div class="framer-1lta2wy" bis_skin_checked="1">
+                                                <div class="framer-k9c0dx"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(41, 41, 43)"
@@ -3546,8 +3546,8 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="framer-w3754v" bis_skin_checked="1">
-                                            <div class="framer-zonvtm" bis_skin_checked="1">
+                                        <div class="framer-t1uq0l" bis_skin_checked="1">
+                                            <div class="framer-1w4cwmu" bis_skin_checked="1">
                                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                                     data-framer-background-image-wrapper="true" bis_skin_checked="1">
                                                     <img src="https://framerusercontent.com/images/KyhKtU0ASLUZqcIkD8iaQJOQ8ks.gif"
@@ -3555,26 +3555,26 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                         style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto">
                                                 </div>
                                             </div>
-                                            <div class="framer-7gqpcj" data-framer-name="text" name="text"
+                                            <div class="framer-mwwfxy" data-framer-name="text" name="text"
                                                 bis_skin_checked="1">
-                                                <div class="framer-74efot"
+                                                <div class="framer-lktlax"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
                                                         class="framer-text">Download the <!-- --><a
-                                                            class="framer-text framer-styles-preset-cis4dt"
-                                                            data-styles-preset="KwFFOsSVz" href="https://tonkeeper.com/"
+                                                            class="framer-text framer-styles-preset-1nr7z7t"
+                                                            data-styles-preset="juLz5WP_1" href="https://tonkeeper.com/"
                                                             target="_blank" rel="noopener">Tonkeeper </a>wallet here
                                                         <!-- --></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="framer-hb4znn" data-framer-name="2" name="2" bis_skin_checked="1">
-                                        <div class="framer-1829a3e" data-framer-name="number" name="number"
+                                    <div class="framer-6ys1kx" data-framer-name="2" name="2" bis_skin_checked="1">
+                                        <div class="framer-gmy5qi" data-framer-name="number" name="number"
                                             bis_skin_checked="1">
-                                            <div class="framer-jellp6" bis_skin_checked="1">
-                                                <div class="framer-1jwgvdh"
+                                            <div class="framer-73hdjr" bis_skin_checked="1">
+                                                <div class="framer-74tubm"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(41, 41, 43)"
@@ -3582,9 +3582,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="framer-twuydt" data-framer-name="Rows" name="Rows"
+                                        <div class="framer-15qohwf" data-framer-name="Rows" name="Rows"
                                             bis_skin_checked="1">
-                                            <div class="framer-zy985d" bis_skin_checked="1">
+                                            <div class="framer-nv0ira" bis_skin_checked="1">
                                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                                     data-framer-background-image-wrapper="true" bis_skin_checked="1">
                                                     <img src="https://framerusercontent.com/images/Et29pNlbTONTuJxHVHMpegaog.gif"
@@ -3592,30 +3592,30 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                         style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto">
                                                 </div>
                                             </div>
-                                            <div class="framer-lrdyq8" data-framer-name="text" name="text"
+                                            <div class="framer-veilq0" data-framer-name="text" name="text"
                                                 bis_skin_checked="1">
-                                                <div class="framer-1r9r7e1"
+                                                <div class="framer-1gr2og7"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
                                                         class="framer-text">Bridge from any chain to TON using
-                                                        <!-- --><a class="framer-text framer-styles-preset-cis4dt"
-                                                            data-styles-preset="KwFFOsSVz"
+                                                        <!-- --><a class="framer-text framer-styles-preset-1nr7z7t"
+                                                            data-styles-preset="juLz5WP_1"
                                                             href="https://app.rocketx.exchange/swap" target="_blank"
                                                             rel="noopener">ROCKETX</a> or <!-- --><a
-                                                            class="framer-text framer-styles-preset-cis4dt"
-                                                            data-styles-preset="KwFFOsSVz"
+                                                            class="framer-text framer-styles-preset-1nr7z7t"
+                                                            data-styles-preset="juLz5WP_1"
                                                             href="https://fixedfloat.com/" target="_blank"
                                                             rel="noopener">FIXEDFLOAT </a></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="framer-1roqfh7" data-framer-name="3" name="3" bis_skin_checked="1">
-                                        <div class="framer-sdrps2" data-framer-name="number" name="number"
+                                    <div class="framer-99fkuo" data-framer-name="3" name="3" bis_skin_checked="1">
+                                        <div class="framer-1xwvnt4" data-framer-name="number" name="number"
                                             bis_skin_checked="1">
-                                            <div class="framer-tgnp6t" bis_skin_checked="1">
-                                                <div class="framer-16vr4i1"
+                                            <div class="framer-2wzuuj" bis_skin_checked="1">
+                                                <div class="framer-1i2pnay"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(41, 41, 43)"
@@ -3623,9 +3623,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="framer-izerd7" data-framer-name="Rows" name="Rows"
+                                        <div class="framer-920yb5" data-framer-name="Rows" name="Rows"
                                             bis_skin_checked="1">
-                                            <div class="framer-4vlnud" bis_skin_checked="1">
+                                            <div class="framer-go92sx" bis_skin_checked="1">
                                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                                     data-framer-background-image-wrapper="true" bis_skin_checked="1">
                                                     <img src="https://framerusercontent.com/images/HY0BxHf6fgOMf4V7VvJsLWknBo.gif"
@@ -3633,9 +3633,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                         style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto"
                                                         loading="lazy"></div>
                                             </div>
-                                            <div class="framer-10uxgrx" data-framer-name="text" name="text"
+                                            <div class="framer-i4ootb" data-framer-name="text" name="text"
                                                 bis_skin_checked="1">
-                                                <div class="framer-1wmt9gd"
+                                                <div class="framer-wtg8u2"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
@@ -3645,11 +3645,11 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="framer-67tino" data-framer-name="4" name="4" bis_skin_checked="1">
-                                        <div class="framer-1yibywj" data-framer-name="number" name="number"
+                                    <div class="framer-1lfpvsg" data-framer-name="4" name="4" bis_skin_checked="1">
+                                        <div class="framer-fjif7q" data-framer-name="number" name="number"
                                             bis_skin_checked="1">
-                                            <div class="framer-19dq6mw" bis_skin_checked="1">
-                                                <div class="framer-hdys7d"
+                                            <div class="framer-12iix1h" bis_skin_checked="1">
+                                                <div class="framer-1qupcad"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(41, 41, 43)"
@@ -3657,9 +3657,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="framer-10zbpfa" data-framer-name="Rows" name="Rows"
+                                        <div class="framer-10hdy69" data-framer-name="Rows" name="Rows"
                                             bis_skin_checked="1">
-                                            <div class="framer-nvpbn" bis_skin_checked="1">
+                                            <div class="framer-y28ye7" bis_skin_checked="1">
                                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                                     data-framer-background-image-wrapper="true" bis_skin_checked="1">
                                                     <img src="https://framerusercontent.com/images/9rQrhWP7vLE1IWQLiX3bkPbU2J8.gif"
@@ -3667,15 +3667,15 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                                         style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto"
                                                         loading="lazy"></div>
                                             </div>
-                                            <div class="framer-7w37z4" data-framer-name="text" name="text"
+                                            <div class="framer-lcvxvy" data-framer-name="text" name="text"
                                                 bis_skin_checked="1">
-                                                <div class="framer-vjouhn"
+                                                <div class="framer-130tgbx"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:translate(-50%, -50%)"
                                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
                                                         class="framer-text">Swap $TON for $1TON on <!-- --><a
-                                                            class="framer-text framer-styles-preset-cis4dt"
-                                                            data-styles-preset="KwFFOsSVz" href="https://app.ston.fi/"
+                                                            class="framer-text framer-styles-preset-1nr7z7t"
+                                                            data-styles-preset="juLz5WP_1" href="https://app.ston.fi/"
                                                             target="_blank" rel="noopener">StonFi</a> using our CA
                                                         <!-- --></p>
                                                 </div>
@@ -3685,60 +3685,59 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                 </div>
                             </div>
                         </div>
-                        <div class="framer-1kyfhay" data-framer-name="tokenomics" name="tokenomics"
+                        <div class="framer-14bcg7c" data-framer-name="tokenomics" name="tokenomics"
                             bis_skin_checked="1">
-                            <div class="framer-1xupz0q"
+                            <div class="framer-1hdj9yz"
                                 style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                 data-framer-component-type="RichTextContainer" bis_skin_checked="1">
-                                <p style="--font-selector:R0Y7SmFjcXVlcyBGcmFuY29pcy1yZWd1bGFy;--framer-font-family:&quot;Jacques Francois&quot;, &quot;Jacques Francois Placeholder&quot;, serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(255, 255, 255)"
+                                <p style="--font-selector:R0Y7SmFjcXVlcyBGcmFuY29pcy1yZWd1bGFy;--framer-font-family:&quot;Jacques Francois&quot;, &quot;Jacques Francois Placeholder&quot;, sans-serif;--framer-font-size:64px;--framer-line-height:76.8px;--framer-text-color:rgb(255, 255, 255)"
                                     class="framer-text">Tokenomics</p>
                             </div>
-                            <div class="framer-k1lm4r" data-framer-name="wrap tokenomics" name="wrap tokenomics"
+                            <div class="framer-1rhgzim" data-framer-name="wrap tokenomics" name="wrap tokenomics"
                                 bis_skin_checked="1">
-                                <div class="framer-1xiek1k" data-framer-name="symbol" name="symbol"
-                                    bis_skin_checked="1">
-                                    <div class="framer-1kn7cw9"
+                                <div class="framer-zslevi" data-framer-name="symbol" name="symbol" bis_skin_checked="1">
+                                    <div class="framer-mxt0hu"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItODAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-font-weight:800;--framer-line-height:38.4px"
                                             class="framer-text">Symbol</p>
                                     </div>
-                                    <div class="framer-itk3fp"
+                                    <div class="framer-3th1f2"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:translateY(-50%)"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItNzAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:40px;--framer-font-weight:700;--framer-line-height:48px"
                                             class="framer-text">$1TON</p>
                                     </div>
                                 </div>
-                                <div class="framer-1p97269" data-framer-name="Tx" name="Tx" bis_skin_checked="1">
-                                    <div class="framer-17f3k61"
+                                <div class="framer-u2m9c3" data-framer-name="Tx" name="Tx" bis_skin_checked="1">
+                                    <div class="framer-16q6qus"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItODAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-font-weight:800;--framer-line-height:38.4px"
                                             class="framer-text">Tax</p>
                                     </div>
-                                    <div class="framer-2fe14s"
+                                    <div class="framer-3wict9"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItNzAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:40px;--framer-font-weight:700;--framer-line-height:48px"
                                             class="framer-text">0/0</p>
                                     </div>
                                 </div>
-                                <div class="framer-11zdcqm" data-framer-name="contarct address" name="contarct address"
+                                <div class="framer-rq659d" data-framer-name="contarct address" name="contarct address"
                                     bis_skin_checked="1">
-                                    <div class="framer-k3463d"
+                                    <div class="framer-12nvg66"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItODAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-font-weight:800;--framer-line-height:38.4px"
                                             class="framer-text">Contract Address</p>
                                     </div>
-                                    <div class="framer-ptlpg1"
+                                    <div class="framer-1d0lir8"
                                         style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                         data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                         <p style="--font-selector:R0Y7SW50ZXItNzAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:40px;--framer-font-weight:700;--framer-line-height:48px"
                                             class="framer-text">EQDJ9Qd7A24OUB8cP…</p>
                                     </div>
-                                    <div class="framer-v6vy6n-container" bis_skin_checked="1">
+                                    <div class="framer-yphui1-container" bis_skin_checked="1">
                                         <div style="opacity:1;transform:none;width:100%;height:100%"
                                             bis_skin_checked="1"><button
                                                 style="border:none;outline:none;resize:none;width:max-content;word-break:break-word;overflow-wrap:break-word;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);letter-spacing:-0.2px;display:flex;justify-content:center;align-items:center;border-radius:50px;cursor:pointer;padding:10px 25px;font-size:16px;font-weight:500;font-family:Inter Medium, Inter, Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;background:rgb(0, 0, 0);color:rgb(255, 255, 255)">COPY</button>
@@ -3747,11 +3746,11 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                 </div>
                             </div>
                         </div>
-                        <div class="framer-q26t8k" data-framer-appear-id="q26t8k" data-framer-name="home page"
+                        <div class="framer-1kea3sr" data-framer-appear-id="1kea3sr" data-framer-name="home page"
                             name="home page" style="opacity: 1; transform: perspective(1200px);" bis_skin_checked="1">
-                            <div class="framer-1524igg" data-framer-name="deskirpsi dan title"
-                                name="deskirpsi dan title" bis_skin_checked="1">
-                                <div class="framer-1b5rdtw" data-framer-name="1$TON logo tengah"
+                            <div class="framer-94o30v" data-framer-name="deskirpsi dan title" name="deskirpsi dan title"
+                                bis_skin_checked="1">
+                                <div class="framer-1sl9m9y" data-framer-name="1$TON logo tengah"
                                     name="1$TON logo tengah" bis_skin_checked="1">
                                     <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                         data-framer-background-image-wrapper="true" bis_skin_checked="1"><img
@@ -3760,14 +3759,14 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                             style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:cover;image-rendering:auto">
                                     </div>
                                 </div>
-                                <div class="framer-199hgn2"
+                                <div class="framer-m50xsf"
                                     style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                     <p style="--font-selector:R0Y7SW50ZXItNjAw;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:28px;--framer-font-weight:600;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
                                         class="framer-text">$1TON on TON Blockchain</p>
                                 </div>
-                                <div class="framer-d8x0c3"
-                                    style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
+                                <div class="framer-prvmt1"
+                                    style="outline: none; display: flex; flex-direction: column; justify-content: flex-start; flex-shrink: 0; transform: none; opacity: 1;"
                                     data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                     <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:32px;--framer-line-height:38.4px;--framer-text-color:rgb(255, 255, 255)"
                                         class="framer-text"><a class="framer-text framer-styles-preset-1nr7z7t"
@@ -3776,7 +3775,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                             mass, volume or force. It has a long history and has acquired several
                                             meanings and uses.</a></p>
                                 </div>
-                            </div><a class="framer-163tuhg framer-lux5qc" href="https://wikipedia.org/wiki/Ton"
+                            </div><a class="framer-t52uoz framer-13krmnf" href="https://wikipedia.org/wiki/Ton"
                                 target="_blank" rel="noopener">
                                 <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
                                     data-framer-background-image-wrapper="true" bis_skin_checked="1"><img
@@ -3786,9 +3785,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                 </div>
                             </a>
                         </div>
-                        <div class="framer-1b6e1d6" data-framer-name="wrap logo tw tele" name="wrap logo tw tele"
+                        <div class="framer-13xikzx" data-framer-name="wrap logo tw tele" name="wrap logo tw tele"
                             bis_skin_checked="1">
-                            <div class="framer-1efkt67" bis_skin_checked="1"><a class="framer-gl7bmv framer-lux5qc"
+                            <div class="framer-vga92e" bis_skin_checked="1"><a class="framer-dtazt4 framer-13krmnf"
                                     data-framer-name="telegram logo" name="telegram logo"
                                     href="https://t.me/OneTonCommunity" target="_blank" rel="noopener">
                                     <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
@@ -3797,7 +3796,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                             alt=""
                                             style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:contain;image-rendering:auto"
                                             loading="lazy"></div>
-                                </a><a class="framer-11pojeu framer-lux5qc" data-framer-name="twitter logo"
+                                </a><a class="framer-cdkatj framer-13krmnf" data-framer-name="twitter logo"
                                     name="twitter logo" href="https://t.me/OneTonCommunity" target="_blank"
                                     rel="noopener">
                                     <div style="position:absolute;border-radius:inherit;top:0;right:0;bottom:0;left:0"
@@ -3807,7 +3806,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
                                             style="display:block;width:100%;height:100%;border-radius:inherit;object-position:center;object-fit:contain;image-rendering:auto"
                                             loading="lazy"></div>
                                 </a></div>
-                            <div class="framer-w6bhs3"
+                            <div class="framer-12v83it"
                                 style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;transform:none"
                                 data-framer-component-type="RichTextContainer" bis_skin_checked="1">
                                 <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:24px;--framer-line-height:28.8px;--framer-text-color:rgb(255, 255, 255)"
@@ -3827,9 +3826,9 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
             if (window.__framer_disable_appear_effects_optimization__ !== true) {
                 const respectReducedMotion = false
                 const reducedMotion = respectReducedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches === true
-                const breakpoints = [{ "hash": "72rtr7" }]
+                const breakpoints = [{ "hash": "z98z6l" }]
                 if (animator) {
-                    const appearAnimations = { "8tp1xs": { "animate": { "opacity": 1, "rotate": 0, "rotateX": 0, "rotateY": 0, "scale": 1, "transition": { "damping": 30, "delay": 0, "mass": 1, "stiffness": 400, "type": "spring" }, "x": 0, "y": 0 }, "variantHash": "72rtr7", "initial": { "opacity": 0.001, "rotate": 0, "scale": 1, "x": 0, "y": 0 }, "transformTemplate": "perspective(1200px) __Appear_Animation_Transform__" }, "q26t8k": { "animate": { "opacity": 1, "rotate": 0, "rotateX": 0, "rotateY": 0, "scale": 1, "transition": { "damping": 30, "delay": 0, "mass": 1, "stiffness": 400, "type": "spring" }, "x": 0, "y": 0 }, "variantHash": "72rtr7", "initial": { "opacity": 0.001, "rotate": 0, "scale": 1, "x": 0, "y": 0 }, "transformTemplate": "perspective(1200px) __Appear_Animation_Transform__" } }
+                    const appearAnimations = { "c9boa9": { "animate": { "opacity": 1, "rotate": 0, "rotateX": 0, "rotateY": 0, "scale": 1, "transition": { "damping": 30, "delay": 0.1, "mass": 1, "stiffness": 400, "type": "spring" }, "x": 0, "y": 0 }, "variantHash": "z98z6l", "initial": { "opacity": 0.001, "rotate": 0, "scale": 1, "x": 0, "y": 0 }, "transformTemplate": "perspective(1200px) __Appear_Animation_Transform__" }, "1kea3sr": { "animate": { "opacity": 1, "rotate": 0, "rotateX": 0, "rotateY": 0, "scale": 1, "transition": { "damping": 30, "delay": 0, "mass": 1, "stiffness": 400, "type": "spring" }, "x": 0, "y": 0 }, "variantHash": "z98z6l", "initial": { "opacity": 0.001, "rotate": 0, "scale": 1, "x": 0, "y": 0 }, "transformTemplate": "perspective(1200px) __Appear_Animation_Transform__" } }
                     const activeVariantHash = animator.getActiveVariantHash(breakpoints)
                     const animate = (selector, keyframesByProps, optionsByProps) => {
                         for (const [name, keyframes] of Object.entries(keyframesByProps)) {
@@ -3845,7 +3844,7 @@ Ton is any of several units of measure of mass, volume or force. It has a long h
         })
     </script>
     <script type="module" data-framer-bundle=""
-        src="https://framerusercontent.com/sites/5coWe7jE8MqY3Am4EeHnP6/preview_script0.BKKFKNGA.mjs"></script>
+        src="https://framerusercontent.com/sites/31IFMvR7Tr90cOzQQT257w/preview_script0.OOUJDCNJ.mjs"></script>
 
     <!-- End of bodyEnd -->
 
